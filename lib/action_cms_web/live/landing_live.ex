@@ -2,7 +2,7 @@ defmodule ActionCmsWeb.LandingLive do
   use ActionCmsWeb, :live_view
 
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    {:ok, assign(socket, :current_year, Date.utc_today().year)}
   end
 
   def render(assigns) do
@@ -393,7 +393,7 @@ defmodule ActionCmsWeb.LandingLive do
           </div>
           
           <p class="text-purple-400 text-xs">
-            © 2024 FinControl. Revolucionando finanças com tecnologia.
+            © <%= @current_year %> FinControl. Revolucionando finanças com tecnologia.
           </p>
         </div>
       </footer>
