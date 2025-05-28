@@ -17,7 +17,6 @@
           </.link>
         </div>
         
-        <!-- Mobile menu button -->
         <div class="md:hidden">
           <.link href={~p"/"} class="text-purple-200 hover:text-white p-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -29,70 +28,99 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
-  <div class="min-h-screen flex items-center justify-center pt-20">
-    <div class="w-full max-w-md mx-4">
-      <!-- Logo -->
-      <div class="text-center mb-8">
-        <h1 class="text-2xl font-bold text-white text-glow">Criar sua conta</h1>
-        <p class="text-purple-200 text-sm mt-2">
-          Já tem uma conta?
-          <.link navigate={~p"/users/log_in"} class="text-purple-300 hover:text-white font-semibold underline">
-            Fazer login
-          </.link>
-        </p>
+  <!-- Split Layout Content -->
+  <div class="min-h-screen flex pt-20">
+    <!-- Left Side - Brand/Info -->
+    <div class="hidden lg:flex lg:w-1/2 flex-col justify-center items-center p-12">
+      <div class="max-w-md text-center">
+        <div class="mb-8">
+          <div class="w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-400 rounded-3xl flex items-center justify-center mx-auto mb-6 glow-effect floating-animation">
+            <span class="text-white font-bold text-3xl">F</span>
+          </div>
+          <h1 class="text-4xl font-bold text-white text-glow mb-4">Junte-se ao FinControl</h1>
+          <p class="text-lg text-purple-200">Crie sua conta e comece a revolucionar sua vida financeira hoje mesmo.</p>
+        </div>
+        
+        <div class="space-y-4 text-purple-200">
+          <div class="flex items-center space-x-3">
+            <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
+            <span class="text-sm">Grátis por 14 dias</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <div class="w-2 h-2 bg-pink-400 rounded-full"></div>
+            <span class="text-sm">Sem cartão de crédito</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
+            <span class="text-sm">Suporte 24/7</span>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <!-- Form -->
-      <div class="glass-morphism rounded-2xl p-6">
-        <.simple_form :let={f} for={@changeset} action={~p"/users/register"} class="space-y-4">
-          <div :if={@changeset.action == :insert} class="mb-4 p-3 bg-red-500/20 border border-red-500/30 rounded-lg text-red-200 text-sm">
-            Ops, algo deu errado! Verifique os erros abaixo.
+    <!-- Right Side - Form -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center p-6">
+      <div class="w-full max-w-md">
+        <div class="glass-morphism rounded-2xl p-8">
+          <div class="text-center mb-8">
+            <h2 class="text-2xl font-bold text-white text-glow mb-2">Criar conta</h2>
+            <p class="text-purple-200 text-sm">
+              Já tem uma conta?
+              <.link navigate={~p"/users/log_in"} class="text-purple-300 hover:text-white font-semibold underline ml-1">
+                Fazer login
+              </.link>
+            </p>
           </div>
 
-          <div>
-            <label class="block text-sm font-medium text-purple-200 mb-2">Email</label>
-            <input 
-              type="email" 
-              name="user[email]" 
-              id="user_email" 
-              value={Phoenix.HTML.Form.input_value(f, :email)} 
-              required
-              class="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none transition-colors"
-              placeholder="seu@email.com" />
-            <%= if @changeset.errors[:email] do %>
-              <span class="text-red-400 text-xs">Email inválido</span>
-            <% end %>
-          </div>
-          
-          <div>
-            <label class="block text-sm font-medium text-purple-200 mb-2">Senha</label>
-            <input 
-              type="password" 
-              name="user[password]" 
-              id="user_password" 
-              required
-              class="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none transition-colors"
-              placeholder="Mínimo 12 caracteres" />
-            <%= if @changeset.errors[:password] do %>
-              <span class="text-red-400 text-xs">Senha deve ter pelo menos 12 caracteres</span>
-            <% end %>
-          </div>
+          <form action={~p"/users/register"} method="post" class="space-y-6">
+            <input type="hidden" name="_csrf_token" value={Plug.CSRFProtection.get_csrf_token()} />
+            
+            <div :if={@changeset.action == :insert} class="p-4 bg-red-500/20 border border-red-500/30 rounded-lg">
+              <p class="text-red-200 text-sm">Ops, algo deu errado! Verifique os erros abaixo.</p>
+            </div>
 
-          <button 
-            type="submit"
-            phx-disable-with="Criando conta..." 
-            class="w-full mt-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-3 rounded-lg font-semibold btn-animate transform hover:scale-105 glow-effect transition-all">
-            Criar conta
-          </button>
-        </.simple_form>
-      </div>
+            <div>
+              <label for="user_email" class="block text-sm font-medium text-purple-200 mb-2">Email</label>
+              <input 
+                type="email" 
+                name="user[email]" 
+                id="user_email" 
+                value={Phoenix.HTML.Form.input_value(@changeset, :email)} 
+                required
+                class="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
+                placeholder="seu@email.com" />
+              <%= if @changeset.errors[:email] do %>
+                <p class="text-red-400 text-xs mt-1">Email inválido</p>
+              <% end %>
+            </div>
+            
+            <div>
+              <label for="user_password" class="block text-sm font-medium text-purple-200 mb-2">Senha</label>
+              <input 
+                type="password" 
+                name="user[password]" 
+                id="user_password" 
+                required
+                class="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
+                placeholder="Mínimo 12 caracteres" />
+              <%= if @changeset.errors[:password] do %>
+                <p class="text-red-400 text-xs mt-1">Senha deve ter pelo menos 12 caracteres</p>
+              <% end %>
+            </div>
 
-      <!-- Back to home -->
-      <div class="text-center mt-6">
-        <.link href={~p"/"} class="text-purple-300 hover:text-white text-sm font-medium">
-          ← Voltar ao início
-        </.link>
+            <button 
+              type="submit"
+              class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-3 rounded-lg font-semibold btn-animate transform hover:scale-105 glow-effect transition-all focus:outline-none focus:ring-2 focus:ring-purple-500/50">
+              Criar conta
+            </button>
+          </form>
+
+          <div class="text-center mt-6">
+            <.link href={~p"/"} class="text-purple-300 hover:text-white text-sm font-medium transition-colors">
+              ← Voltar ao início
+            </.link>
+          </div>
+        </div>
       </div>
     </div>
   </div>
