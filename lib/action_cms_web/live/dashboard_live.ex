@@ -4,6 +4,7 @@ defmodule ActionCmsWeb.DashboardLive do
   def mount(_params, _session, socket) do
     {:ok, 
      assign(socket,
+       current_user: socket.assigns[:current_user],
        current_year: Date.utc_today().year,
        user_stats: %{
          total_balance: 47520.89,
@@ -77,12 +78,12 @@ defmodule ActionCmsWeb.DashboardLive do
             <div class="flex items-center space-x-3">
               <div class="w-8 h-8 bg-gradient-to-r from-green-400 to-blue-400 rounded-full flex items-center justify-center">
                 <span class="text-white font-bold text-xs">
-                  <%= if @current_user, do: String.first(@current_user.email), else: "U" %>
+                  <%= if assigns[:current_user] && @current_user, do: String.first(@current_user.email), else: "U" %>
                 </span>
               </div>
               <div class="flex-1 min-w-0">
                 <p class="text-sm font-medium text-white truncate">
-                  <%= if @current_user, do: @current_user.email, else: "Usuário" %>
+                  <%= if assigns[:current_user], do: @current_user.email, else: "Usuário" %>
                 </p>
                 <p class="text-xs text-gray-400">Online</p>
               </div>
