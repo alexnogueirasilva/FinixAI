@@ -2,7 +2,10 @@ defmodule ActionCmsWeb.LandingLive do
   use ActionCmsWeb, :live_view
 
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :current_year, Date.utc_today().year)}
+    {:ok, assign(socket, 
+      current_year: Date.utc_today().year,
+      current_user: socket.assigns[:current_user]
+    )}
   end
 
   def render(assigns) do
@@ -22,9 +25,21 @@ defmodule ActionCmsWeb.LandingLive do
             <a href="#features" class="text-purple-200 hover:text-white transition-colors text-sm">Recursos</a>
             <a href="#dashboard" class="text-purple-200 hover:text-white transition-colors text-sm">Dashboard</a>
             <a href="#contact" class="text-purple-200 hover:text-white transition-colors text-sm">Contato</a>
-            <button class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-4 py-2 rounded-lg text-sm font-semibold btn-animate transform hover:scale-105 glow-effect">
-              Começar Agora
-            </button>
+            <%= if assigns[:current_user] do %>
+              <.link href={~p"/dashboard"} class="text-purple-200 hover:text-white transition-colors text-sm">
+                Meu Dashboard
+              </.link>
+              <.link href={~p"/users/log_out"} method="delete" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold btn-animate transform hover:scale-105">
+                Sair
+              </.link>
+            <% else %>
+              <.link href={~p"/users/log_in"} class="text-purple-200 hover:text-white transition-colors text-sm">
+                Entrar
+              </.link>
+              <.link href={~p"/users/register"} class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-4 py-2 rounded-lg text-sm font-semibold btn-animate transform hover:scale-105 glow-effect">
+                Começar Agora
+              </.link>
+            <% end %>
           </div>
         </div>
       </nav>
@@ -44,9 +59,15 @@ defmodule ActionCmsWeb.LandingLive do
           </div>
 
           <div class="flex flex-col lg:flex-row gap-6 justify-center mt-12">
-            <button class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 rounded-2xl text-lg font-semibold btn-animate transform hover:scale-105 shadow-2xl pulse-glow">
-              COMEÇAR AGORA
-            </button>
+            <%= if assigns[:current_user] do %>
+              <.link href={~p"/dashboard"} class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 rounded-2xl text-lg font-semibold btn-animate transform hover:scale-105 shadow-2xl pulse-glow text-center">
+                IR PARA DASHBOARD
+              </.link>
+            <% else %>
+              <.link href={~p"/users/register"} class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 rounded-2xl text-lg font-semibold btn-animate transform hover:scale-105 shadow-2xl pulse-glow text-center">
+                COMEÇAR AGORA
+              </.link>
+            <% end %>
             <button class="border-2 border-purple-400 text-purple-200 hover:bg-purple-400 hover:text-white px-8 py-4 rounded-2xl text-lg font-semibold btn-animate">
               VER DEMO
             </button>
@@ -333,9 +354,15 @@ defmodule ActionCmsWeb.LandingLive do
             </p>
             
             <div class="flex flex-col lg:flex-row gap-6 justify-center mb-10">
-              <button class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 rounded-2xl text-lg md:text-xl font-semibold btn-animate transform hover:scale-105 shadow-2xl glow-effect">
-                COMEÇAR GRÁTIS AGORA
-              </button>
+              <%= if assigns[:current_user] do %>
+                <.link href={~p"/dashboard"} class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 rounded-2xl text-lg md:text-xl font-semibold btn-animate transform hover:scale-105 shadow-2xl glow-effect text-center">
+                  ACESSAR DASHBOARD
+                </.link>
+              <% else %>
+                <.link href={~p"/users/register"} class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 rounded-2xl text-lg md:text-xl font-semibold btn-animate transform hover:scale-105 shadow-2xl glow-effect text-center">
+                  COMEÇAR GRÁTIS AGORA
+                </.link>
+              <% end %>
               <button class="border-2 border-purple-400 text-purple-200 hover:bg-purple-400 hover:text-white px-8 py-4 rounded-2xl text-lg md:text-xl font-semibold btn-animate">
                 FALAR COM ESPECIALISTA
               </button>
