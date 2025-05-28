@@ -3,3 +3,277 @@
 @import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
+
+/* Reset and full width enforcement */
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+#root, .phx-main, main {
+  width: 100vw !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Force full viewport usage */
+.full-viewport {
+  width: 100vw !important;
+  max-width: none !important;
+  margin-left: calc(-50vw + 50%) !important;
+  margin-right: calc(-50vw + 50%) !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Aura Theme Custom Styles */
+@layer utilities {
+  .gradient-text {
+    background: linear-gradient(45deg, #a855f7, #ec4899, #8b5cf6, #f97316);
+    background-size: 300% 300%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-shift 4s ease-in-out infinite;
+  }
+  
+  .gradient-bg {
+    background: linear-gradient(135deg, #0f0c29 0%, #24243e 25%, #302b63 50%, #0f0c29 75%, #24243e 100%);
+    background-size: 400% 400%;
+    animation: gradient-move 20s ease infinite;
+    width: 100vw;
+    min-height: 100vh;
+    position: relative;
+  }
+  
+  .glass-morphism {
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    background: rgba(139, 92, 246, 0.05);
+    border: 1px solid rgba(139, 92, 246, 0.1);
+    box-shadow: 0 8px 32px rgba(139, 92, 246, 0.1);
+  }
+  
+  .glow-effect {
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.4), 0 0 80px rgba(139, 92, 246, 0.2);
+  }
+  
+  .floating-animation {
+    animation: floating 6s ease-in-out infinite;
+  }
+  
+  .pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite alternate;
+  }
+  
+  .hero-title {
+    text-shadow: 0 0 50px rgba(139, 92, 246, 0.6), 0 0 100px rgba(139, 92, 246, 0.3);
+    line-height: 0.8;
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+  }
+}
+
+@keyframes floating {
+  0% { transform: translate(0, 0px) rotate(0deg); }
+  25% { transform: translate(15px, -15px) rotate(1deg); }
+  50% { transform: translate(-10px, -25px) rotate(-1deg); }
+  75% { transform: translate(20px, -10px) rotate(0.5deg); }
+  100% { transform: translate(0, 0px) rotate(0deg); }
+}
+
+@keyframes pulse-glow {
+  from {
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.3), 0 0 60px rgba(139, 92, 246, 0.1);
+  }
+  to {
+    box-shadow: 0 0 50px rgba(139, 92, 246, 0.6), 0 0 100px rgba(139, 92, 246, 0.3);
+  }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  25% { background-position: 100% 50%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes gradient-move {
+  0% { background-position: 0% 50%; }
+  20% { background-position: 100% 50%; }
+  40% { background-position: 100% 100%; }
+  60% { background-position: 0% 100%; }
+  80% { background-position: 0% 0%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(139, 92, 246, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #8b5cf6, #a855f7);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #7c3aed, #9333ea);
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-hover:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 30px 60px rgba(139, 92, 246, 0.3), 0 0 40px rgba(139, 92, 246, 0.2);
+}
+
+/* Button animations */
+.btn-animate {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-animate::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.btn-animate:hover::before {
+  left: 100%;
+}
+
+.btn-animate:hover {
+  box-shadow: 0 20px 40px rgba(139, 92, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-animate:active {
+  transform: scale(0.98);
+}
+
+/* Section styling - force full width */
+section {
+  width: 100vw !important;
+  max-width: none !important;
+  margin-left: calc(-50vw + 50%) !important;
+  margin-right: calc(-50vw + 50%) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  width: 100%;
+}
+
+/* Navigation fixes */
+nav {
+  width: 100vw !important;
+  max-width: none !important;
+}
+
+/* Container overrides */
+.container, .mx-auto {
+  max-width: none !important;
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Force content to edges */
+.edge-to-edge {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* Large text responsive */
+.mega-title {
+  font-size: clamp(4rem, 15vw, 20rem);
+  line-height: 0.8;
+  font-weight: 900;
+}
+
+.large-title {
+  font-size: clamp(3rem, 10vw, 12rem);
+  line-height: 0.9;
+  font-weight: 800;
+}
+
+.big-text {
+  font-size: clamp(1.5rem, 5vw, 4rem);
+  line-height: 1.2;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .edge-to-edge {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .glass-morphism {
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+}
+
+@media (max-width: 480px) {
+  .edge-to-edge {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+/* Remove any remaining width constraints */
+.w-full {
+  width: 100vw !important;
+}
+
+.max-w-none {
+  max-width: none !important;
+}
+
+/* Ensure no horizontal scroll */
+body {
+  overflow-x: hidden;
+}
