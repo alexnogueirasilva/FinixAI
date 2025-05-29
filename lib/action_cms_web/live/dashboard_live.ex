@@ -27,11 +27,9 @@ defmodule ActionCmsWeb.DashboardLive do
 
   def render(assigns) do
     ~H"""
-    <div class="dashboard-container h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden">
-      <!-- Split Layout Container -->
-      <div class="flex h-full w-full overflow-hidden">
-        <!-- Left Sidebar -->
-        <div class="w-64 bg-gray-800 border-r border-gray-700 flex flex-col flex-shrink-0 min-w-0">
+    <div class="flex h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden">
+      <!-- Left Sidebar -->
+      <aside class="w-64 bg-gray-800 border-r border-gray-700 flex flex-col flex-shrink-0">
           <!-- Logo -->
           <div class="p-6 border-b border-gray-700">
             <div class="flex items-center space-x-3">
@@ -91,13 +89,13 @@ defmodule ActionCmsWeb.DashboardLive do
               </.link>
             </div>
           </div>
-        </div>
+        </aside>
         
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col min-w-0 w-0">
+        <main class="flex-1 flex flex-col overflow-hidden">
           <!-- Header -->
-          <header class="bg-gray-800 border-b border-gray-700 flex-shrink-0">
-            <div class="px-6 py-4 flex items-center justify-between">
+          <header class="bg-gray-800 border-b border-gray-700 flex-shrink-0 h-16 flex items-center">
+            <div class="max-w-screen-xl mx-auto px-6 w-full flex items-center justify-between">
               <div>
                 <h1 class="text-xl font-bold text-white">Dashboard Financeiro</h1>
                 <p class="text-sm text-gray-400">Bem-vindo ao seu painel de controle</p>
@@ -114,10 +112,10 @@ defmodule ActionCmsWeb.DashboardLive do
           </header>
           
           <!-- Dashboard Content -->
-          <main class="dashboard-main flex-1 bg-gray-900 overflow-y-auto overflow-x-hidden">
-            <div class="max-w-5xl mx-auto p-6 space-y-6">
+          <div class="flex-1 bg-gray-900 overflow-y-auto overflow-x-hidden">
+            <div class="max-w-screen-xl mx-auto px-6 py-6 space-y-6">
               <!-- Stats Cards -->
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+              <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 w-full">
                 <div class="bg-gradient-to-r from-purple-600 to-purple-700 rounded-lg p-4 text-white">
                   <div class="flex items-center justify-between mb-2">
                     <span class="text-purple-200 text-xs">Saldo Total</span>
@@ -156,7 +154,7 @@ defmodule ActionCmsWeb.DashboardLive do
               </div>
             
               <!-- Charts and Transactions -->
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full max-w-full">
                 <!-- Chart Section -->
                 <div class="bg-gray-800 rounded-lg p-4">
                   <h3 class="text-white text-sm font-semibold mb-3">Evolução Patrimonial</h3>
@@ -204,7 +202,7 @@ defmodule ActionCmsWeb.DashboardLive do
               </div>
             
               <!-- Categories Section -->
-              <div class="bg-gray-800 rounded-lg p-6 w-full">
+              <div class="bg-gray-800 rounded-lg p-6 w-full max-w-full">
                 <h3 class="text-white text-sm font-semibold mb-3">Categorias de Gastos</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div class="flex items-center justify-center">
@@ -228,9 +226,8 @@ defmodule ActionCmsWeb.DashboardLive do
                 </div>
               </div>
             </div>
-          </main>
-        </div>
-      </div>
+          </div>
+        </main>
     </div>
     """
   end
